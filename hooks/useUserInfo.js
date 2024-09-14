@@ -6,12 +6,15 @@ export default function useUserInfo() {
   const [userInfo, setUserInfo] = useState();
   const [status, setStatus] = useState("loading");
   const getUserInfo = () => {
-    if (sessionStatus === "loading") return;
+    if (sessionStatus === "loading"){
+      setStatus('unauthenticated')
+    }
 
+    if(!session?.user?.id) return; // just return if there is no session
     fetch("/api/users?id=" + session.user.id).then(response => {
       response.json().then(json => {
         setUserInfo(json.user);
-        setStatus("done");
+        setStatus("authenticated");
       });
     });
   };
@@ -20,5 +23,5 @@ export default function useUserInfo() {
     getUserInfo();
   }, [sessionStatus]);
 
-  return { userInfo, status };
+  return { userInfo, setUserInfo, status };
 }

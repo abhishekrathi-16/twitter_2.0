@@ -8,6 +8,8 @@ export default function PostContent({
   author,
   createdAt,
   _id,
+  likesCount,
+  likedByMe,
   big = false,
 }) {
   return (
@@ -33,7 +35,7 @@ export default function PostContent({
               <Link href={`/${author.username}/status/${_id}`}>
                 <div>{text}</div>
               </Link>
-              <PostButtons />
+              <PostButtons id={_id} likesCount={likesCount} likedByMe={likedByMe} />
             </div>
           )}
         </div>
@@ -53,7 +55,7 @@ export default function PostContent({
             }
             </div>
           )}
-          <PostButtons />
+          <PostButtons id={_id} likesCount={likesCount} likedByMe={likedByMe} />
         </div>
       )}
     </div>
