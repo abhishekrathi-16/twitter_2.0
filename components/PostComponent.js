@@ -10,6 +10,7 @@ export default function PostContent({
   _id,
   likesCount,
   likedByMe,
+  commentsCount,
   big = false,
 }) {
   return (
@@ -33,9 +34,14 @@ export default function PostContent({
           {!big && (
             <div>
               <Link href={`/${author.username}/status/${_id}`}>
-                <div>{text}</div>
+                <div className="w-full cursor-pointer">{text}</div>
               </Link>
-              <PostButtons id={_id} likesCount={likesCount} likedByMe={likedByMe} />
+              <PostButtons
+                id={_id}
+                likesCount={likesCount}
+                likedByMe={likedByMe}
+                commentsCount={commentsCount}
+              />
             </div>
           )}
         </div>
@@ -45,17 +51,21 @@ export default function PostContent({
           <Link href={`/${author.username}/status/${_id}`}>{text}</Link>
           {createdAt && (
             <div className="text-twitterLightGray text-sm">
-                {new Date(createdAt)
+              {new Date(createdAt)
                 .toISOString()
-                .replace('T',' ')
-                .slice(0,16)
-                .split(' ')
+                .replace("T", " ")
+                .slice(0, 16)
+                .split(" ")
                 .reverse()
-                .join(' ')
-            }
+                .join(" ")}
             </div>
           )}
-          <PostButtons id={_id} likesCount={likesCount} likedByMe={likedByMe} />
+          <PostButtons
+            id={_id}
+            likesCount={likesCount}
+            likedByMe={likedByMe}
+            commentsCount={commentsCount}
+          />
         </div>
       )}
     </div>
