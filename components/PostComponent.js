@@ -20,7 +20,7 @@ export default function PostContent({
         <div>
           {!!author?.image && (
             <Link href={`/` + author?.username}>
-              <div className="cursor-pointer">
+              <div className="cursor-pointer overflow-hidden rounded-full">
                 <Avatar src={author.image} />
               </div>
             </Link>

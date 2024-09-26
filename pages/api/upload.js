@@ -25,7 +25,9 @@ export default async function handle(req, res) {
     if (err) {
       throw err;
     }
-    const fileInfo = files["cover"][0];
+
+    const type = Object.keys(files)[0]
+    const fileInfo = files[type][0];
     const fileName = fileInfo.path.split("/")[1];
     s3Client.upload(
       {
@@ -37,8 +39,9 @@ export default async function handle(req, res) {
       },
       async (err, data) => {
         const user = await User.findByIdAndUpdate(session.user.id, {
-          cover: data.Location,
+          [type]: data.Location,
         });
+        fs.unlinkSync(fileInfo.path)
         res.json({ err, data, fileInfo, src: data.Location });
       }
     );
