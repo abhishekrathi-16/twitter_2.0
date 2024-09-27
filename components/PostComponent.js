@@ -29,11 +29,11 @@ export default function PostContent({
         <div className="pl-2 grow">
           <div>
             <Link href={`/` + author?.username}>
-              <span className="font-bold pr-1 cursor-pointer">{author.name}</span>
+              <span className="font-bold pr-1 cursor-pointer">{author?.name}</span>
             </Link>
             {big && <br />}
             <Link href={`/` + author?.username}>
-              <span className="text-twitterLightGray cursor-pointer">@{author.username}</span>
+              <span className="text-twitterLightGray cursor-pointer">@{author?.username}</span>
             </Link>
             {createdAt && !big && (
               <span className="pl-1 text-twitterLightGray">
@@ -43,12 +43,12 @@ export default function PostContent({
           </div>
           {!big && (
             <div>
-              <Link href={`/${author.username}/status/${_id}`}>
+              <Link href={`/${author?.username}/status/${_id}`}>
                 <div className="w-full cursor-pointer">{text}</div>
               </Link>
               <PostButtons
                 id={_id}
-                username={author.username}
+                username={author?.username}
                 likesCount={likesCount}
                 likedByMe={likedByMe}
                 commentsCount={commentsCount}
@@ -59,7 +59,7 @@ export default function PostContent({
       </div>
       {big && (
         <div className="mt-2">
-          <Link href={`/${author.username}/status/${_id}`}>{text}</Link>
+          <Link href={`/${author?.username}/status/${_id}`}>{text}</Link>
           {createdAt && (
             <div className="text-twitterLightGray text-sm">
               {new Date(createdAt)
@@ -73,7 +73,7 @@ export default function PostContent({
           )}
           <PostButtons
             id={_id}
-            username={author.username}
+            username={author?.username}
             likesCount={likesCount}
             likedByMe={likedByMe}
             commentsCount={commentsCount}

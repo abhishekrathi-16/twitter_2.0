@@ -32,7 +32,7 @@ export default function PostForm({ onPost, compact, parent, placeholder="What\'s
               onChange={(e) => setText(e.target.value)}
             />
             {!compact && (
-              <div className="text-right border-t border-twitterBorder pt-2">
+              <div className="text-right border-t border-twitterBorder pt-2 my-2">
                 <button className="bg-twitterBlue text-white px-5 py-1 rounded-full">
                   Tweet
                 </button>
