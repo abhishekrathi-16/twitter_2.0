@@ -18,17 +18,15 @@ export default async function handle(req, res) {
     },
   });
 
-  const form = new multiparty.Form({
-    uploadDir: "./public",
-  });
+  const form = new multiparty.Form();
   form.parse(req, async (err, fields, files) => {
     if (err) {
       throw err;
     }
 
-    const type = Object.keys(files)[0]
+    const type = Object.keys(files)[0];
     const fileInfo = files[type][0];
-    const fileName = fileInfo.path.split("/")[1];
+    const fileName = fileInfo.path.split("/").slice(-1)[0];
     s3Client.upload(
       {
         Bucket: "abhi-twitter-clone",
@@ -38,10 +36,13 @@ export default async function handle(req, res) {
         ContentType: fileInfo.headers["content-type"],
       },
       async (err, data) => {
-        const user = await User.findByIdAndUpdate(session.user.id, {
-          [type]: data.Location,
-        });
-        fs.unlinkSync(fileInfo.path)
+        if (type === "cover" || type == "image") {
+          await User.findByIdAndUpdate(session.user.id, {
+            [type]: data.Location,
+          });
+        }
+
+        fs.unlinkSync(fileInfo.path);
         res.json({ err, data, fileInfo, src: data.Location });
       }
     );

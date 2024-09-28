@@ -11,8 +11,22 @@ export default function PostContent({
   likesCount,
   likedByMe,
   commentsCount,
+  images,
   big = false,
 }) {
+  function showImages() {
+    if(!images?.length) return '';
+    return (
+      <div className="flex -mx-1">
+        {images.length > 0 &&
+          images.map(img => (
+            <div key={img} className="m-1">
+              <img src={img} alt="" />
+            </div>
+          ))}
+      </div>
+    );
+  }
   return (
     // big is used for design difference between big layouts and small layouts design on the Post page and home page
     <div>
@@ -29,11 +43,15 @@ export default function PostContent({
         <div className="pl-2 grow">
           <div>
             <Link href={`/` + author?.username}>
-              <span className="font-bold pr-1 cursor-pointer">{author?.name}</span>
+              <span className="font-bold pr-1 cursor-pointer">
+                {author?.name}
+              </span>
             </Link>
             {big && <br />}
             <Link href={`/` + author?.username}>
-              <span className="text-twitterLightGray cursor-pointer">@{author?.username}</span>
+              <span className="text-twitterLightGray cursor-pointer">
+                @{author?.username}
+              </span>
             </Link>
             {createdAt && !big && (
               <span className="pl-1 text-twitterLightGray">
@@ -44,7 +62,10 @@ export default function PostContent({
           {!big && (
             <div>
               <Link href={`/${author?.username}/status/${_id}`}>
-                <div className="w-full cursor-pointer">{text}</div>
+                <div className="w-full cursor-pointer">
+                  {text}
+                  {showImages()}
+                </div>
               </Link>
               <PostButtons
                 id={_id}
@@ -59,7 +80,12 @@ export default function PostContent({
       </div>
       {big && (
         <div className="mt-2">
-          <Link href={`/${author?.username}/status/${_id}`}>{text}</Link>
+          <Link href={`/${author?.username}/status/${_id}`}>
+            <div>
+              {text}
+              {showImages()}
+            </div>
+          </Link>
           {createdAt && (
             <div className="text-twitterLightGray text-sm">
               {new Date(createdAt)

@@ -13,7 +13,15 @@ export default function Home() {
   const { userInfo, setUserInfo ,status: userInfoStatus } = useUserInfo();
   const [posts, setPosts] = useState([]);
   const [idsLikedByme, setIdsLikedByMe] = useState([]);
+
+  // to handle multiple route.push() calls to avoid errors
+  const [onChanging, setOnChanging] = useState(false);
   const router = useRouter();
+  const safePush = (path) => {
+    if(onChanging) return;
+    setOnChanging(true);
+    router.push(path);
+  }
 
   function fetchHomePosts() {
     axios.get("/api/posts").then((res) => {
@@ -40,7 +48,7 @@ export default function Home() {
   }
 
   if(!userInfo){
-    router.push('/login')
+    safePush('/login')
     return 'no user info'
   }
 
@@ -55,7 +63,7 @@ export default function Home() {
       <div className="">
         {posts.length > 0 &&
           posts.map((post) => (
-            <div className="border-t border-twitterBorder p-5">
+            <div className="border-t border-twitterBorder p-5" key={post._id}>
               {post.parent && (
                 <div>
                   <PostContent {...post.parent} />

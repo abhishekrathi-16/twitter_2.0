@@ -7,6 +7,7 @@ const PostSchema = new Schema(
     likesCount: { type: Number, default: 0 },
     commentsCount: {type: Number, default: 0},
     parent: { type: mongoose.Types.ObjectId, ref: "Post" }, // if the post is on the home page, it will not have any parent,ie, parent will be null but if it is a reply on a post, it will have a parent
+    images: {type: [String]},
   },
   {
     timestamps: true,

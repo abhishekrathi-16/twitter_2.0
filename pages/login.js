@@ -13,7 +13,7 @@ export default function LoginPage({ providers }) {
   return (
     <div className="flex items-center justify-center h-screen">
       {Object.values(providers).map((provider) => (
-        <div>
+        <div key={provider.id}>
           <button
             className="bg-twitterWhite pr-3 pl-3 py-2 text-black rounded-full flex items-center gap-2"
             onClick={async () => await signIn(provider.id)}
