@@ -48,7 +48,7 @@ export default async function handler(req, res) {
 
       const postsLikedByMe = []
       if(session){
-        await Like.find({
+        postsLikedByMe = await Like.find({
           author: session?.user?.id, // for posts that are liked by a user
           post: posts.map((p) => p._id), // return array of ids of posts that are liked by the user
         });

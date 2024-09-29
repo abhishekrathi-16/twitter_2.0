@@ -24,7 +24,7 @@ export default function UserPage() {
     axios.get("/api/users?username=" + username).then((response) => {
       setProfileInfo(response.data.user);
       setOriginalProfileInfo(response.data.user);
-      setIsFollowing(response.data.following)
+      setIsFollowing(!!response.data.following)
     });
   }, [username]);
 
@@ -38,7 +38,7 @@ export default function UserPage() {
   }, [profileInfo]);
 
   function updateUserImage(type, src) {
-    setProfileInfo((prev) => ({ ...prev, [type]: src }));
+    setProfileInfo(prev => ({ ...prev, [type]: src }));
   }
 
   async function updateProfile() {
@@ -60,7 +60,7 @@ export default function UserPage() {
   }
 
   function toggleFollow() {
-    setIsFollowing((prev) => !prev);
+    setIsFollowing(prev => !prev);
     axios.post("/api/followers", { 
       destination: profileInfo._id
      });
@@ -87,7 +87,7 @@ export default function UserPage() {
                   big
                   src={profileInfo.image}
                   editable={isMyProfile}
-                  onChange={(src) => updateUserImage("image", src)}
+                  onChange={src => updateUserImage("image", src)}
                 />
               </div>
             </div>
