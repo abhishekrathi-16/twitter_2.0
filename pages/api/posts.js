@@ -46,7 +46,7 @@ export default async function handler(req, res) {
         .limit(20)
         .exec();
 
-      const postsLikedByMe = []
+      let postsLikedByMe = []
       if(session){
         postsLikedByMe = await Like.find({
           author: session?.user?.id, // for posts that are liked by a user
