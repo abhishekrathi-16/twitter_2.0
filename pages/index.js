@@ -24,9 +24,12 @@ export default function Home() {
   }
 
   function fetchHomePosts() {
-    axios.get("/api/posts").then((res) => {
-      setPosts(res.data.posts);
-      setIdsLikedByMe(res.data.idslikedByMe);
+    if(!session){
+      return;
+    }
+    axios.get("/api/posts").then(response => {
+      setPosts(response.data.posts);
+      setIdsLikedByMe(response.data.idslikedByMe);
     });
   }
 
